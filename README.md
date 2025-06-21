@@ -51,6 +51,21 @@ npm start
 
 Which will start a server at `http://localhost:8080`, proxying API requests to the replica at port 4943.
 
+
+## 🔗 Local Deployment URL
+
+Access the DApp locally here:
+ Frontend canister via browser:
+    icp-crud-dapp-frontend:
+      - http://u6s2n-gx777-77774-qaaba-cai.localhost:4943/ (Recommended)
+      - http://127.0.0.1:4943/?canisterId=u6s2n-gx777-77774-qaaba-cai (Legacy)
+    internet_identity:
+      - http://uzt4z-lp777-77774-qaabq-cai.localhost:4943/ (Recommended)
+      - http://127.0.0.1:4943/?canisterId=uzt4z-lp777-77774-qaabq-cai (Legacy)
+  Backend canister via Candid interface:
+    icp-crud-dapp-backend: http://127.0.0.1:4943/?canisterId=umunu-kh777-77774-qaaca-cai&id=uxrrr-q7777-77774-qaaaq-cai
+    internet_identity: http://127.0.0.1:4943/?canisterId=umunu-kh777-77774-qaaca-cai&id=uzt4z-lp777-77774-qaabq-cai
+
 ### Note on frontend environment variables
 
 If you are hosting frontend code somewhere without using DFX, you may need to make one of the following adjustments to ensure your project does not fetch the root key in production:
