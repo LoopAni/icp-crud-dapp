@@ -1,30 +1,51 @@
-import { useState } from 'react';
-import { icp_crud_dapp_backend } from 'declarations/icp-crud-dapp-backend';
+import React, { useState, useEffect } from "react";
+import { icp_crud_dapp_backend } from "declarations/icp-crud-dapp-backend";
 
 function App() {
-  const [greeting, setGreeting] = useState('');
+  const [notes, setNotes] = useState([]);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const name = event.target.elements.name.value;
-    icp_crud_dapp_backend.greet(name).then((greeting) => {
-      setGreeting(greeting);
-    });
-    return false;
-  }
+  const fetchNotes = async () => {
+    const res = await icp_crud_dapp_backend.get_notes();
+    setNotes(res);
+  };
+
+  const createNote = async () => {
+    await icp_crud_dapp_backend.create_note(title, content);
+    fetchNotes();
+  };
+
+  const updateNote = async (id) => {
+    await icp_crud_dapp_backend.update_note(id, title, content);
+    fetchNotes();
+  };
+
+  const deleteNote = async (id) => {
+    await icp_crud_dapp_backend.delete_note(id);
+    fetchNotes();
+  };
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
   return (
-    <main>
-      <img src="/logo2.svg" alt="DFINITY logo" />
-      <br />
-      <br />
-      <form action="#" onSubmit={handleSubmit}>
-        <label htmlFor="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
-      </form>
-      <section id="greeting">{greeting}</section>
-    </main>
+    <div className="App">
+      <h1>ICP CRUD Notes</h1>
+      <input placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
+      <input placeholder="Content" onChange={(e) => setContent(e.target.value)} />
+      <button onClick={createNote}>Add</button>
+      <ul>
+        {notes.map((n) => (
+          <li key={n.id}>
+            <strong>{n.title}</strong> — {n.content}
+            <button onClick={() => updateNote(n.id)}>Edit</button>
+            <button onClick={() => deleteNote(n.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

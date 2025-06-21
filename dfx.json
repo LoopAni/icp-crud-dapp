@@ -28,10 +28,11 @@
     }
   },
   "defaults": {
-    "build": {
-      "args": "",
-      "packtool": ""
-    }
+  "build": {
+    "args": "",
+    "packtool": "",
+    "pocket_ic": false
+  }
   },
   "output_env_file": ".env",
   "version": 1
